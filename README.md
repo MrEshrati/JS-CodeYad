@@ -16,3 +16,7 @@ Serve the repository with a local HTTP server, for example `python -m http.serve
 ## Run the weather demo
 
 Set `OPENWEATHER_API_KEY` in the server environment. With Node.js 18 or newer, run `node WeatherApp/server.js` from the repository root and open `http://127.0.0.1:8000`. The browser calls the local weather endpoint and the server makes the OpenWeather request. The server binds to localhost for this demo.
+
+## License
+
+The [ISC License](typing_speed_test/LICENSE) covers MrEshrati's original code and documentation in `typing_speed_test/`, consistent with that package's metadata. Third-party starter code and media are outside this grant.
