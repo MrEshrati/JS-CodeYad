@@ -4,36 +4,25 @@ var descOutput = document.getElementById("description");
 var tempOutput = document.getElementById("temp");
 var windOutput = document.getElementById("wind");
 var btn = document.getElementById("add");
-const apiKey = "REDACTED";
-
-function kelvin_to_celsius(temp) {
-  return (temp - 273).toFixed(0);
-}
-
-async function getLongLat() {
-  var cityName = cityInput.value;
-  const locationData = await (
-    await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${1}&appid=${apiKey}`,
-    )
-  ).json();
-  getWeather(locationData);
-}
-
-async function getWeather(data) {
-  const weatherData = await (
-    await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${data[0]["lat"]}&lon=${data[0]["lon"]}&appid=${apiKey}`,
-    )
-  ).json();
-  setData(weatherData);
+async function getWeather() {
+  const city = cityInput.value;
+  try {
+    const response = await fetch('/api/weather?' + new URLSearchParams({ city }));
+    const weather = await response.json();
+    if (!response.ok) {
+      throw new Error(weather.message);
+    }
+    setData(weather);
+  } catch (error) {
+    descOutput.textContent = error.message;
+  }
 }
 
 const setData = (weather) => {
-  cityOutput.innerHTML = `Location: ${weather["name"]}`;
-  descOutput.innerHTML = `Description: ${weather["weather"][0]["description"]}`;
-  tempOutput.innerHTML = `Temperature: ${kelvin_to_celsius(weather["main"]["temp"])} C`;
-  windOutput.innerHTML = `Wind Speed: ${weather["wind"]["speed"]} Km/h`;
+  cityOutput.textContent = `Location: ${weather["name"]}`;
+  descOutput.textContent = `Description: ${weather["weather"][0]["description"]}`;
+  tempOutput.textContent = `Temperature: ${Math.round(weather["main"]["temp"])} C`;
+  windOutput.textContent = `Wind Speed: ${weather["wind"]["speed"]} Km/h`;
 };
 
-btn.addEventListener("click", getLongLat);
+btn.addEventListener("click", getWeather);

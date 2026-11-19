@@ -12,3 +12,7 @@ Standalone browser exercises covering JavaScript fundamentals, asynchronous requ
 ## Run locally
 
 Serve the repository with a local HTTP server, for example `python -m http.server 8000`, then open the desired exercise. The IndexedDB example and typing test start at `main.html`. Some demos use third-party services and depend on their availability and configuration.
+
+## Run the weather demo
+
+Set `OPENWEATHER_API_KEY` in the server environment. With Node.js 18 or newer, run `node WeatherApp/server.js` from the repository root and open `http://127.0.0.1:8000`. The browser calls the local weather endpoint and the server makes the OpenWeather request. The server binds to localhost for this demo.
